@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.deak.dkuilibrary.layout.RoundLinearLayout
+        android:id="@+id/ll_round_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:round_bgColor="@android:color/holo_blue_dark"
+        app:round_layoutRadius="10dp"
+        app:round_strokeColor="@color/black"
+        app:round_strokeEnable="true"
+        app:round_strokeSize="1dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="自定义圆角、颜色layout"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </com.deak.dkuilibrary.layout.RoundLinearLayout>
+    <com.deak.dkuilibrary.layout.DKTextView
+        android:id="@+id/tv_dk_custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_bright"
+        android:text="拥有自定义字体阴影、描边等功能的Textview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_round_layout"
+        app:round_bgColor="@android:color/transparent"
+        app:round_layoutRadius="10dp"
+        app:round_strokeEnable="false"
+        app:dk_enableTextShadow="true"
+        app:dk_textShadowColor="@android:color/black"
+        app:dk_textShadowX="1dp"
+        app:dk_textShadowY="1dp"
+        app:dk_textShadowRadius="4dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
