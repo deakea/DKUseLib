@@ -23,5 +23,8 @@
         <attr name="dk_useGradientColor" format="boolean"/>
         <attr name="dk_textStartColor" format="color"/>
         <attr name="dk_textEndColor" format="color"/>
+        <attr name="dk_enableTextBorder" format="boolean"/>
+        <attr name="dk_textBorderWidth" format="dimension"/>
+        <attr name="dk_textBorderColor" format="color"/>
     </declare-styleable>
 </resources>
