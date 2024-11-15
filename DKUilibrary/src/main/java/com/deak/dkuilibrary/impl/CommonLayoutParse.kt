@@ -74,6 +74,10 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
             R.styleable.RoundLayout_round_layoutBottomRightRadius,
             0.dp()
         )
+        mAngle = typedArray.getDimension(
+            R.styleable.RoundLayout_round_gradientAngle,
+            0f
+        )
         //是否使用渐变背景
         isUseGradientBg =
             typedArray.getBoolean(R.styleable.RoundLayout_round_useGradientBg, false)

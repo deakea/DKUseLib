@@ -13,6 +13,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.core.graphics.withSave
+import androidx.core.widget.addTextChangedListener
 import com.deak.dkuilibrary.R
 import com.deak.dkuilibrary.dk_interface.TextViewInterface
 import com.deak.dkuilibrary.utils.DimensionUtils.dp
@@ -43,7 +44,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     private var mTextBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var isUseTextBorder = false
     private var mAngle = 0f
-    private var mStrokeAngle = 0f
+    private var mBorderAngle = 0f
     private var isTranGradient = false
 
     init {
@@ -61,6 +62,8 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
         isUseGradient = typedArray.getBoolean(R.styleable.DKTextView_dk_useGradientColor, false)
         isUseTextBorder = typedArray.getBoolean(R.styleable.DKTextView_dk_enableTextBorder, false)
         isTranGradient = typedArray.getBoolean(R.styleable.DKTextView_dk_isTranGradient, false)
+        mAngle = typedArray.getFloat(R.styleable.DKTextView_dk_textGradientAngle, 0f)
+        mBorderAngle = typedArray.getFloat(R.styleable.DKTextView_dk_textBorderGradientAngle, 0f)
         if (isUseGradient) {
             mColorArray = intArrayOf(
                 typedArray.getColor(R.styleable.DKTextView_dk_textStartColor, Color.TRANSPARENT),
@@ -88,6 +91,11 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
             mTextBorderPaint.setTypeface(mTextView.typeface)
             mTextBorderPaint.flags = mTextView.paint.flags
             mTextBorderPaint.setAlpha(mTextView.paint.alpha)
+        }
+        mTextView.addTextChangedListener {
+            if (isUseTextBorder || isUseGradient || isTranGradient || isEnableTextShadow) {
+                mTextView.invalidate()
+            }
         }
     }
 
@@ -137,7 +145,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     override fun setTextStrokeGradient(colors: IntArray, positions: FloatArray) {
         if (colors.size >= 2 && positions.size >= 2) {
 
-            val angleStartPoint = mTextRectF.getTextAngleStartPoint(mStrokeAngle)
+            val angleStartPoint = mTextRectF.getTextAngleStartPoint(mBorderAngle)
             mTextBorderPaint.shader =
                 LinearGradient(
                     angleStartPoint[0].x,
@@ -171,7 +179,11 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
             setTextBounds(mTextView.text.toString())
             val angleStartPoint = mTextRectF.getTextAngleStartPoint(mAngle)
             mTextView.paint.shader = LinearGradient(
-                if (!isTranGradient) {angleStartPoint[0].x}else{-mTextRectF.width()},
+                if (!isTranGradient) {
+                    angleStartPoint[0].x
+                } else {
+                    -mTextRectF.width()
+                },
                 angleStartPoint[0].y,
                 if (!isTranGradient) {
                     angleStartPoint[1].x
@@ -187,8 +199,8 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
                     val matrix = Matrix()
                     matrix.setTranslate(mTrans, 0f)
                     setLocalMatrix(matrix)
-                    mTrans+=3
-                    if (mTrans >= mTextRectF.width()*2) {
+                    mTrans += 3
+                    if (mTrans >= mTextRectF.width() * 2) {
                         mTrans = 0f
                     }
                 }

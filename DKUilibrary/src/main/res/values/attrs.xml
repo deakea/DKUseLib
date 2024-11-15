@@ -13,6 +13,7 @@
         <attr name="round_useGradientBg" format="boolean" />
         <attr name="round_gradientStartBg" format="color" />
         <attr name="round_gradientEndBg" format="color" />
+        <attr name="round_gradientAngle" format="float" />
     </declare-styleable>
     <declare-styleable name="DKTextView">
         <attr name="dk_enableTextShadow" format="boolean" />
@@ -21,11 +22,13 @@
         <attr name="dk_textShadowX" format="dimension" />
         <attr name="dk_textShadowColor" format="color" />
         <attr name="dk_useGradientColor" format="boolean"/>
+        <attr name="dk_textGradientAngle" format="float"/>
         <attr name="dk_textStartColor" format="color"/>
         <attr name="dk_textEndColor" format="color"/>
         <attr name="dk_enableTextBorder" format="boolean"/>
         <attr name="dk_textBorderWidth" format="dimension"/>
         <attr name="dk_textBorderColor" format="color"/>
+        <attr name="dk_textBorderGradientAngle" format="float"/>
         <attr name="dk_isTranGradient" format="boolean"/>
     </declare-styleable>
 </resources>

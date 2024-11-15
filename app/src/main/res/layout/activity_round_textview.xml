@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:isScrollContainer="true">
 
     <com.deak.dkuilibrary.layout.DKTextView
         android:id="@+id/text1"
@@ -77,6 +78,7 @@
         app:dk_enableTextBorder="true"
         app:dk_textBorderColor="@color/black"
         app:dk_textBorderWidth="3dp"
+        app:dk_textBorderGradientAngle="140"
         />
     <com.deak.dkuilibrary.layout.DKTextView
         android:id="@+id/text5"
@@ -98,6 +100,19 @@
         app:dk_textShadowColor="@android:color/holo_red_dark"
         app:dk_textShadowRadius="3dp"
         app:dk_textShadowY="1dp"
-        app:dk_isTranGradient="true"
+        app:dk_isTranGradient="false"
+        />
+    <com.deak.dkuilibrary.layout.DKEditTextView
+        android:id="@+id/edit1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/text5"
+        app:dk_useGradientColor="true"
+        app:dk_textStartColor="@android:color/holo_blue_bright"
+        app:dk_textEndColor="@android:color/holo_purple"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

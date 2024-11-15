@@ -26,6 +26,7 @@ class DKTextView(context: Context, attrs: AttributeSet?) :
         initParse(this)
         initTextView(this)
         setBackgroundColor(Color.TRANSPARENT)
+        includeFontPadding = false
     }
 
 //    override fun layout(l: Int, t: Int, r: Int, b: Int) {
