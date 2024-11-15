@@ -34,7 +34,11 @@ interface TextViewInterface {
     fun setTextShadow(radius:Float=0f,shadowX:Float = 0f,shadowY:Float = 0f)
     fun getShadowX():Int
     fun getShadowY():Int
-    fun setTextGradientColor(colorArray: IntArray, positionArray: FloatArray)
+    fun setTextGradientColor(colorArray: IntArray, positionArray: FloatArray,angle:Float=0f)
+    fun enableTextGradient(enable:Boolean)
+    fun setTextStrokeGradient(colors: IntArray, positions: FloatArray)
+    fun setTextStroke(color:Int)
+    fun setTextStrokeWidth(width:Float)
     fun drawTextViewCanvas(canvas: Canvas)
     fun drawTextViewCanvasAfter(canvas: Canvas)
 }

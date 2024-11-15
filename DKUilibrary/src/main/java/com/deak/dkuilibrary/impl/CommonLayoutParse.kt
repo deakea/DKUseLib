@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PointF
 import android.graphics.RectF
 import android.graphics.Shader
 import android.util.AttributeSet
@@ -15,7 +16,9 @@ import androidx.core.graphics.withSave
 import com.deak.dkuilibrary.R
 import com.deak.dkuilibrary.dk_interface.LayoutParse
 import com.deak.dkuilibrary.utils.DimensionUtils.dp
+import com.deak.dkuilibrary.utils.DimensionUtils.getAngleStartPoint
 import com.deak.dkuilibrary.utils.DimensionUtils.toDKFloat
+
 
 /**
  *@time 创建时间:2024/11/13
@@ -38,6 +41,8 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
     private var mStrokeRectF = RectF()
     private var mColorArray: IntArray = intArrayOf()
     private var mPositionArray = floatArrayOf(0.0f, 1f)
+    private var mAngle: Float = 0f
+    private var mStartEndGradientPoint = mutableListOf<PointF>()
     private lateinit var mView:View
 
     init {
@@ -147,9 +152,10 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
                 )
             }
             if (isUseGradientBg) {
+                mStartEndGradientPoint = mRectF.getAngleStartPoint(mAngle)
                 mPaint.shader = LinearGradient(
-                    0f, 0f, (mRectF.right), 0f,
-                    mColorArray, mPositionArray, Shader.TileMode.REPEAT
+                    mStartEndGradientPoint[0].x, mStartEndGradientPoint[0].y, mStartEndGradientPoint[1].x, mStartEndGradientPoint[1].y,
+                    mColorArray, mPositionArray, Shader.TileMode.CLAMP
                 )
             }
         }
@@ -157,6 +163,7 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
     override fun setRadius(radius:Float){
         mRadius = radius
         mPath.addRoundRect(mRectF, mRadius, mRadius, Path.Direction.CW)
+        mView.invalidate()
     }
     override fun setRadius(
         leftTopRadius: Float,
@@ -187,8 +194,10 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
     /**
      * 设置渐变颜色，需要带入此方法
      */
-    override fun setGradientColor(colorArray: IntArray, positionArray: FloatArray) {
+    override fun setGradientColor(colorArray: IntArray, positionArray: FloatArray,angle:Float) {
         mView.post {
+            mAngle = angle
+            mStartEndGradientPoint = mRectF.getAngleStartPoint(mAngle)
             mPaint.shader = LinearGradient(
                 0f, 0f, (mRectF.right), (mRectF.bottom),
                 colorArray, positionArray, Shader.TileMode.REPEAT
@@ -204,6 +213,7 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
         mView.post {
             mPaint.shader = null
             mPaint.color = color
+            mView.invalidate()
         }
     }
 
@@ -214,4 +224,5 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
             if (strokeEnable) canvas.drawRoundRect(mStrokeRectF, mRadius, mRadius, mStokePaint)
         }
     }
+
 }

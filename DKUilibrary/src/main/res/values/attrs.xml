@@ -26,5 +26,6 @@
         <attr name="dk_enableTextBorder" format="boolean"/>
         <attr name="dk_textBorderWidth" format="dimension"/>
         <attr name="dk_textBorderColor" format="color"/>
+        <attr name="dk_isTranGradient" format="boolean"/>
     </declare-styleable>
 </resources>

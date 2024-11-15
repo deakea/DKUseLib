@@ -32,7 +32,7 @@ interface LayoutParse {
     /**
      * 设置渐变颜色，需要带入此方法
      */
-    fun setGradientColor(colorArray: IntArray, positionArray: FloatArray)
+    fun setGradientColor(colorArray: IntArray, positionArray: FloatArray,angle:Float)
     /**
      * 重新设置成单一颜色调用次方法
      */
