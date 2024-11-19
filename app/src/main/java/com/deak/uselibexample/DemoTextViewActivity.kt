@@ -26,16 +26,27 @@ class DemoTextViewActivity : FragmentActivity() {
                         floatArrayOf(
                             0f, 0.25f, 0.5f, 0.75f, 1f
                         ),
-                        angle = 60f
+                        angle = 0f
                     )
                 }
+            }
+            with(edit1) {
+                    setTextGradientColor(
+                        colorArray = intArrayOf(
+                            Color.RED, Color.CYAN, Color.GREEN, Color.YELLOW, Color.MAGENTA
+                        ),
+                        floatArrayOf(
+                            0f, 0.25f, 0.5f, 0.75f, 1f
+                        ),
+                        angle = 0f
+                    )
             }
             with(text4) {
                 var isChangeStrokeColor = false
                 setOnClickListener {
                     if (!isChangeStrokeColor) {
                         isChangeStrokeColor = true
-                        text = "彩色衣服已换，点击卸甲"
+                        text = "彩色衣服已换，点击卸甲asdasfvew dfsw3v fdbggn dfgrhb y5rh4tfggb  fddf "
                         setTextStrokeGradient(
                             intArrayOf(
                                 Color.RED, Color.CYAN, Color.GREEN, Color.YELLOW, Color.MAGENTA
@@ -59,7 +70,7 @@ class DemoTextViewActivity : FragmentActivity() {
                     floatArrayOf(
                         0f, 0.25f, 0.5f, 0.75f, 1f
                     ),
-                    angle = 60f
+                    angle = 0f
                 )
             }
         }

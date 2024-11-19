@@ -3,13 +3,13 @@ package com.deak.dkuilibrary.layout
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import com.deak.dkuilibrary.dk_interface.LayoutParse
 import com.deak.dkuilibrary.dk_interface.TextViewInterface
 import com.deak.dkuilibrary.impl.CommonLayoutParse
 import com.deak.dkuilibrary.impl.TextViewImpl
-import kotlin.math.min
 
 /**
  *@time 创建时间:2024/6/25
@@ -41,8 +41,11 @@ class DKTextView(context: Context, attrs: AttributeSet?) :
 
     override fun onDraw(canvas: Canvas) {
         drawTextViewCanvas(canvas)
-//        setShadowLayer(8f,0f,40f,Color.BLACK)
-        super.onDraw(canvas)
+        setTextSuperCanvas(canvas) {
+            super.onDraw(canvas)
+        }
+//        super.onDraw(canvas);
+
         drawCanvas(canvas)
         drawTextViewCanvasAfter(canvas)
     }

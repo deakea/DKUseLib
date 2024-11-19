@@ -10,15 +10,17 @@ import android.graphics.Paint.FontMetrics
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Shader
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.widget.TextView
+import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.core.graphics.withSave
 import androidx.core.widget.addTextChangedListener
 import com.deak.dkuilibrary.R
 import com.deak.dkuilibrary.dk_interface.TextViewInterface
 import com.deak.dkuilibrary.utils.DimensionUtils.dp
-import com.deak.dkuilibrary.utils.DimensionUtils.getAngleStartPoint
 import com.deak.dkuilibrary.utils.DimensionUtils.getTextAngleStartPoint
+
 
 /**
  *@time 创建时间:2024/11/14
@@ -41,7 +43,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     private var isUseGradient = false
     private lateinit var mTextView: TextView
 
-    private var mTextBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var mTextBorderPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
     private var isUseTextBorder = false
     private var mAngle = 0f
     private var mBorderAngle = 0f
@@ -73,7 +75,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
         }
         if (isUseTextBorder) {
             val borderWidth =
-                typedArray.getDimension(R.styleable.DKTextView_dk_textBorderWidth, 0.dp())
+                typedArray.getFloat(R.styleable.DKTextView_dk_textBorderWidth, 0.0f)
             val borderColor =
                 typedArray.getColor(R.styleable.DKTextView_dk_textBorderColor, Color.TRANSPARENT)
             mTextBorderPaint.strokeWidth = borderWidth
@@ -91,6 +93,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
             mTextBorderPaint.setTypeface(mTextView.typeface)
             mTextBorderPaint.flags = mTextView.paint.flags
             mTextBorderPaint.setAlpha(mTextView.paint.alpha)
+            mTextBorderPaint.style = Paint.Style.STROKE
         }
         mTextView.addTextChangedListener {
             if (isUseTextBorder || isUseGradient || isTranGradient || isEnableTextShadow) {
@@ -100,13 +103,14 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     }
 
     override fun setTextBounds(content: String) {
+
         mTextView.paint.getTextBounds(content, 0, content.length, mTextBounds)
 
         //获取文字所在区域
         mTextRectF = RectF(
             mTextView.layout.getPrimaryHorizontal(0),
             mTextView.layout.getLineBaseline(0).toFloat() - mTextView.textSize,
-            mTextView.layout.getPrimaryHorizontal(content.length),
+            if (mTextView.layout.lineCount>1) mTextView.layout.getLineRight(0) else mTextView.layout.getPrimaryHorizontal(content.length),
             mTextView.layout.getLineBaseline(mTextView.lineCount - 1).toFloat()
         )
     }
@@ -166,6 +170,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     override fun setTextStrokeWidth(width: Float) {
         isUseTextBorder = width > 0
         mTextBorderPaint.strokeWidth = width
+        mTextBorderPaint.textSize += width
         mTextView.invalidate()
 
     }
@@ -212,19 +217,35 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
 
         }
         if (isUseTextBorder) {
-            val textWidth = mTextBorderPaint.measureText(mTextView.text.toString())
-            canvas.withSave {
-                drawText(
-                    mTextView.text.toString(), (mTextView.width - textWidth) / 2,
-                    mTextView.getBaseline().toFloat(), mTextBorderPaint
-                )
-            }
+//            drawTextWithOutline(canvas)
+//            val textWidth = mTextBorderPaint.measureText(mTextView.text.toString())
+//            canvas.withSave {
+//                mTextView.paint.set(mTextBorderPaint)
+//
+//                drawText(
+//                    mTextView.text.toString(), (mTextView.width - textWidth)/2,
+//                    mTextView.getBaseline().toFloat(), mTextBorderPaint
+//                )
+//                restore()
+//            }
         }
 
     }
 
     override fun drawTextViewCanvasAfter(canvas: Canvas) {
 
+    }
+    override fun setTextSuperCanvas(canvas: Canvas,superCanvas : ()->Unit){
+        if (isUseTextBorder) {
+            canvas.withSave {
+                val strokePaint = mTextBorderPaint
+                mTextView.paint.set(mTextBorderPaint)
+                superCanvas.invoke()
+                restore()
+            }
+        }else{
+            superCanvas.invoke()
+        }
     }
 
 }

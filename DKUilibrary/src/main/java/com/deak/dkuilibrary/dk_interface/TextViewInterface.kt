@@ -12,6 +12,7 @@ import android.widget.TextView
  *@desc
  **/
 interface TextViewInterface {
+
     /**
      * 初始化TextView
      *
@@ -41,4 +42,5 @@ interface TextViewInterface {
     fun setTextStrokeWidth(width:Float)
     fun drawTextViewCanvas(canvas: Canvas)
     fun drawTextViewCanvasAfter(canvas: Canvas)
+    fun setTextSuperCanvas(canvas: Canvas,superCanvas : ()->Unit)
 }

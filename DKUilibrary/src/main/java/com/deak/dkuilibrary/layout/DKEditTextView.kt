@@ -1,6 +1,7 @@
 package com.deak.dkuilibrary.layout
 
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
@@ -28,4 +29,16 @@ class DKEditTextView(context: Context, attrs: AttributeSet?) : AppCompatEditText
                 setTextCursorDrawable(null)
             }
         }
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        setLayoutSet()
+        setTextBounds(text.toString())
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        drawTextViewCanvas(canvas)
+        super.onDraw(canvas)
+        drawCanvas(canvas)
+        drawTextViewCanvasAfter(canvas)
+    }
 }
