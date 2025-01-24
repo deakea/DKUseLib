@@ -44,7 +44,7 @@ class DKTextView(context: Context, attrs: AttributeSet?) :
         setTextSuperCanvas(canvas) {
             super.onDraw(canvas)
         }
-//        super.onDraw(canvas);
+        super.onDraw(canvas);
 
         drawCanvas(canvas)
         drawTextViewCanvasAfter(canvas)

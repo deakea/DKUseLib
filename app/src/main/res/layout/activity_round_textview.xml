@@ -94,7 +94,7 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:dk_enableTextShadow="true"
-        app:dk_isTranGradient="true"
+        app:dk_isTranGradient="false"
         app:dk_textEndColor="@android:color/holo_purple"
         app:dk_textShadowColor="@android:color/holo_red_dark"
         app:dk_textShadowRadius="3dp"

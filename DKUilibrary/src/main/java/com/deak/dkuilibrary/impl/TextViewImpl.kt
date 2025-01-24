@@ -29,6 +29,8 @@ import com.deak.dkuilibrary.utils.DimensionUtils.getTextAngleStartPoint
  *@desc 自定义字体圆角阴影、渐变颜色，字体描边stroke等
  **/
 class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
+    private var mBorderColor: Int = 0
+    private var mStrokeWidth: Float = 0f
     private var mShadowRadius = 0f
     private var mShadowY = 0f
     private var mShadowX = 0f
@@ -43,14 +45,14 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     private var isUseGradient = false
     private lateinit var mTextView: TextView
 
-    private var mTextBorderPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
     private var isUseTextBorder = false
     private var mAngle = 0f
     private var mBorderAngle = 0f
     private var isTranGradient = false
+    private var mShader : LinearGradient?=null
+    private var mTextBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     init {
-        mTextBorderPaint.style = Paint.Style.STROKE
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DKTextView)
         mShadowRadius = typedArray.getDimension(R.styleable.DKTextView_dk_textShadowRadius, 0.dp())
         mShadowX = typedArray.getDimension(R.styleable.DKTextView_dk_textShadowX, 0.dp())
@@ -78,8 +80,8 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
                 typedArray.getFloat(R.styleable.DKTextView_dk_textBorderWidth, 0.0f)
             val borderColor =
                 typedArray.getColor(R.styleable.DKTextView_dk_textBorderColor, Color.TRANSPARENT)
-            mTextBorderPaint.strokeWidth = borderWidth
-            mTextBorderPaint.color = borderColor
+            mStrokeWidth = borderWidth
+            mBorderColor = borderColor
 
         }
 
@@ -150,8 +152,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
         if (colors.size >= 2 && positions.size >= 2) {
 
             val angleStartPoint = mTextRectF.getTextAngleStartPoint(mBorderAngle)
-            mTextBorderPaint.shader =
-                LinearGradient(
+            mShader = LinearGradient(
                     angleStartPoint[0].x,
                     angleStartPoint[0].y,
                     angleStartPoint[1].x,
@@ -162,15 +163,14 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     }
 
     override fun setTextStroke(color: Int) {
-        mTextBorderPaint.shader = null
-        mTextBorderPaint.color = color
+        mShader = null
+        mBorderColor = color
         mTextView.invalidate()
     }
 
     override fun setTextStrokeWidth(width: Float) {
         isUseTextBorder = width > 0
-        mTextBorderPaint.strokeWidth = width
-        mTextBorderPaint.textSize += width
+        mStrokeWidth = width
         mTextView.invalidate()
 
     }
@@ -216,19 +216,7 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
 
 
         }
-        if (isUseTextBorder) {
-//            drawTextWithOutline(canvas)
-//            val textWidth = mTextBorderPaint.measureText(mTextView.text.toString())
-//            canvas.withSave {
-//                mTextView.paint.set(mTextBorderPaint)
-//
-//                drawText(
-//                    mTextView.text.toString(), (mTextView.width - textWidth)/2,
-//                    mTextView.getBaseline().toFloat(), mTextBorderPaint
-//                )
-//                restore()
-//            }
-        }
+
 
     }
 
@@ -237,13 +225,25 @@ class TextViewImpl(context: Context, attrs: AttributeSet?) : TextViewInterface {
     }
     override fun setTextSuperCanvas(canvas: Canvas,superCanvas : ()->Unit){
         if (isUseTextBorder) {
-            canvas.withSave {
-                val strokePaint = mTextBorderPaint
-                mTextView.paint.set(mTextBorderPaint)
-                superCanvas.invoke()
-                restore()
-            }
-        }else{
+            // 复制原来TextViewg画笔中的一些参数
+            val paint = mTextView.paint
+            mTextBorderPaint.textSize = paint.textSize
+            mTextBorderPaint.setTypeface(mTextView.typeface)
+            mTextBorderPaint.flags = paint.flags
+            mTextBorderPaint.setAlpha(paint.alpha)
+
+            // 自定义描边效果
+            mTextBorderPaint.style = Paint.Style.STROKE
+                mTextBorderPaint.shader = mShader
+                mTextBorderPaint.setColor(mBorderColor)
+            mTextBorderPaint.strokeWidth = mStrokeWidth
+            val text = mTextView.getText().toString()
+
+            // 在文本底层画出带描边的文本
+            canvas.drawText(
+                text, (mTextView.width - mTextBorderPaint.measureText(text)) / 2,
+                mTextView.baseline.toFloat(), mTextBorderPaint
+            )
             superCanvas.invoke()
         }
     }
