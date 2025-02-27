@@ -46,7 +46,7 @@ class DemoTextViewActivity : FragmentActivity() {
                 setOnClickListener {
                     if (!isChangeStrokeColor) {
                         isChangeStrokeColor = true
-                        text = "彩色衣服已换，点击卸甲asd "
+                        text = "彩色衣服已换，点击卸甲asdasdasd哈哈哈哈哈，一起来吧，改天一起递四方速递广东省法规代发个回答发吧 "
                         setTextStrokeGradient(
                             intArrayOf(
                                 Color.RED, Color.CYAN, Color.GREEN, Color.YELLOW, Color.MAGENTA

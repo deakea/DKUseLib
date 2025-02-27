@@ -1,8 +1,7 @@
 package com.deak.dkuilibrary.dk_interface
 
 import android.graphics.Canvas
-import android.graphics.Color
-import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 
 /**
@@ -42,5 +41,18 @@ interface TextViewInterface {
     fun setTextStrokeWidth(width:Float)
     fun drawTextViewCanvas(canvas: Canvas)
     fun drawTextViewCanvasAfter(canvas: Canvas)
-    fun setTextSuperCanvas(canvas: Canvas,superCanvas : ()->Unit)
+    fun setTextSuperCanvas(canvas: Canvas)
+    fun setDKLayoutParams(params: ViewGroup.LayoutParams)
+    fun setDKTextDirection(textDirection: Int)
+    fun setDKLayoutDirection(layoutDirection: Int)
+    fun isBorderText(): Boolean
+    fun onDKLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int)
+    fun setDKMeasuredDimension(newWidth: Int, newHeight: Int)
+    fun onDKMeasure(
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int,
+        superMeasure: () -> Unit
+    )
+
+    fun setBorderTextView(text: CharSequence?)
 }

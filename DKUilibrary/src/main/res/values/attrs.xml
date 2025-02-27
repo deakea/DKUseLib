@@ -26,7 +26,7 @@
         <attr name="dk_textStartColor" format="color"/>
         <attr name="dk_textEndColor" format="color"/>
         <attr name="dk_enableTextBorder" format="boolean"/>
-        <attr name="dk_textBorderWidth" format="float"/>
+        <attr name="dk_textBorderWidth" format="dimension"/>
         <attr name="dk_textBorderColor" format="color"/>
         <attr name="dk_textBorderGradientAngle" format="float"/>
         <attr name="dk_isTranGradient" format="boolean"/>
