@@ -26,5 +26,8 @@ class MainActivity : AppCompatActivity() {
         binding.tvDkCustom.setOnClickListener {
             startActivity(Intent(this,DemoTextViewActivity::class.java))
         }
+        binding.tvDKNetwork.setOnClickListener {
+            startActivity(Intent(this,ConnectedUtilsActivity::class.java))
+        }
     }
 }

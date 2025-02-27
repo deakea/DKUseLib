@@ -32,7 +32,6 @@ class DKEditTextView(context: Context, attrs: AttributeSet?) : AppCompatEditText
             }
             addTextChangedListener {
                 setBorderTextView(it)
-                setTextBounds(it.toString())
             }
         }
     override fun setLayoutParams(params: ViewGroup.LayoutParams) {
@@ -67,6 +66,7 @@ class DKEditTextView(context: Context, attrs: AttributeSet?) : AppCompatEditText
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         setLayoutSet()
+        setTextBounds(text.toString())
 
     }
 

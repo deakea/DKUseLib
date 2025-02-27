@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/DKHttpLibrary" />
             <option value="$PROJECT_DIR$/DKUilibrary" />
             <option value="$PROJECT_DIR$/app" />
           </set>

@@ -51,5 +51,26 @@
         app:dk_textShadowY="1dp"
         app:dk_textShadowRadius="4dp"
         />
+    <com.deak.dkuilibrary.layout.DKTextView
+        android:id="@+id/tvDKNetwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_red_light"
+        android:text="网络工具常规功能"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dk_custom"
+        app:round_bgColor="@android:color/transparent"
+        app:round_layoutRadius="10dp"
+        app:round_strokeEnable="false"
+        app:dk_enableTextShadow="true"
+        app:dk_textShadowColor="@android:color/black"
+        app:dk_textShadowX="1dp"
+        app:dk_textShadowY="1dp"
+        app:dk_textShadowRadius="4dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

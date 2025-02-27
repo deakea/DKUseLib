@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "UseLibExample"
 include(":app")
 include(":DKUilibrary")
+include(":DKHttpLibrary")

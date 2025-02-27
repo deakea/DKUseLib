@@ -30,7 +30,6 @@ class DKTextView(context: Context, attrs: AttributeSet?) :
         setBackgroundColor(Color.TRANSPARENT)
         addTextChangedListener {
             setBorderTextView(it)
-            setTextBounds(it.toString())
         }
         this.includeFontPadding = false
     }
@@ -71,7 +70,7 @@ class DKTextView(context: Context, attrs: AttributeSet?) :
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         setLayoutSet()
-//        setTextBounds(text.toString())
+        setTextBounds(text.toString())
     }
 
 
