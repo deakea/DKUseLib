@@ -1,9 +1,8 @@
-package com.deak.dkuilibrary.layout
+package com.deak.dkuilibrary.view
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -22,7 +21,7 @@ import com.deak.dkuilibrary.impl.TextViewImpl
 class DKTextView(context: Context, attrs: AttributeSet?) :
     AppCompatTextView(context, attrs), LayoutParse by CommonLayoutParse(context, attrs),
     TextViewInterface by TextViewImpl(context, attrs) {
-
+        constructor(context: Context) : this(context, null)
 
     init {
         initParse(this)
@@ -77,9 +76,9 @@ class DKTextView(context: Context, attrs: AttributeSet?) :
     override fun onDraw(canvas: Canvas) {
         drawTextViewCanvas(canvas)
         setTextSuperCanvas(canvas)
+        drawCanvas(canvas)
         super.onDraw(canvas);
 
-        drawCanvas(canvas)
         drawTextViewCanvasAfter(canvas)
     }
 

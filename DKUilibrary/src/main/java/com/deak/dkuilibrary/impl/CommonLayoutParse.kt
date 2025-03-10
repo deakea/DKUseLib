@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
+import android.graphics.Outline
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PointF
@@ -12,6 +13,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewOutlineProvider
 import androidx.core.graphics.withSave
 import com.deak.dkuilibrary.R
 import com.deak.dkuilibrary.dk_interface.LayoutParse
@@ -26,7 +28,7 @@ import com.deak.dkuilibrary.utils.DimensionUtils.toDKFloat
  *@version
  *@desc
  **/
-class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
+class CommonLayoutParse(context: Context, attrs: AttributeSet?) : LayoutParse {
     private var isUseGradientBg: Boolean = false
     private var strokeEnable: Boolean = false
     private var mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -43,7 +45,9 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
     private var mPositionArray = floatArrayOf(0.0f, 1f)
     private var mAngle: Float = 0f
     private var mStartEndGradientPoint = mutableListOf<PointF>()
-    private lateinit var mView:View
+    private lateinit var mView: View
+
+    private var mRadiusList = floatArrayOf()
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundLayout)
@@ -110,8 +114,19 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
             )
         }
         typedArray.recycle()
+        mRadiusList = floatArrayOf(
+            mTopLeftRadius,
+            mTopLeftRadius,
+            mTopRightRadius,
+            mTopRightRadius,
+            mBottomRightRadius,
+            mBottomRightRadius,
+            mBottomLeftRadius,
+            mBottomLeftRadius
+        )
     }
-    override fun initParse(view:View){
+
+    override fun initParse(view: View) {
         mView = view
     }
 
@@ -131,19 +146,9 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
             if (mRadius > 0) {
                 mPath.addRoundRect(mRectF, mRadius, mRadius, Path.Direction.CW)
             } else {
-                val rids = floatArrayOf(
-                    mTopLeftRadius,
-                    mTopLeftRadius,
-                    mTopRightRadius,
-                    mTopRightRadius,
-                    mBottomRightRadius,
-                    mBottomRightRadius,
-                    mBottomLeftRadius,
-                    mBottomLeftRadius,
-                )
                 mPath.addRoundRect(
                     RectF(0f, 0f, width.toFloat(), height.toFloat()),
-                    rids,
+                    mRadiusList,
                     Path.Direction.CW
                 )
             }
@@ -158,25 +163,31 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
             if (isUseGradientBg) {
                 mStartEndGradientPoint = mRectF.getAngleStartPoint(mAngle)
                 mPaint.shader = LinearGradient(
-                    mStartEndGradientPoint[0].x, mStartEndGradientPoint[0].y, mStartEndGradientPoint[1].x, mStartEndGradientPoint[1].y,
-                    mColorArray, mPositionArray, Shader.TileMode.CLAMP
+                    mStartEndGradientPoint[0].x,
+                    mStartEndGradientPoint[0].y,
+                    mStartEndGradientPoint[1].x,
+                    mStartEndGradientPoint[1].y,
+                    mColorArray,
+                    mPositionArray,
+                    Shader.TileMode.CLAMP
                 )
             }
         }
     }
-    override fun setRadius(radius:Float){
+
+    override fun setRadius(radius: Float) {
         mRadius = radius
         mPath.addRoundRect(mRectF, mRadius, mRadius, Path.Direction.CW)
         mView.invalidate()
     }
+
     override fun setRadius(
         leftTopRadius: Float,
         rightTopRadius: Float,
         rightBottomRadius: Float,
         leftBottomRadius: Float,
     ) {
-        mView.post {
-            val rids = floatArrayOf(
+            mRadiusList = floatArrayOf(
                 leftTopRadius,
                 leftTopRadius,
                 rightTopRadius,
@@ -188,37 +199,32 @@ class CommonLayoutParse(context: Context, attrs: AttributeSet?) :LayoutParse{
             )
             mPath.addRoundRect(
                 RectF(0f, 0f, mView.width.toDKFloat(), mView.height.toDKFloat()),
-                rids,
+                mRadiusList,
                 Path.Direction.CW
             )
-            mView.invalidate()
-        }
+            mView.postInvalidate()
     }
 
     /**
      * 设置渐变颜色，需要带入此方法
      */
-    override fun setGradientColor(colorArray: IntArray, positionArray: FloatArray,angle:Float) {
-        mView.post {
+    override fun setGradientColor(colorArray: IntArray, positionArray: FloatArray, angle: Float) {
             mAngle = angle
             mStartEndGradientPoint = mRectF.getAngleStartPoint(mAngle)
             mPaint.shader = LinearGradient(
                 0f, 0f, (mRectF.right), (mRectF.bottom),
                 colorArray, positionArray, Shader.TileMode.REPEAT
             )
-            mView.invalidate()
-        }
+            mView.postInvalidate()
     }
 
     /**
      * 重新设置成单一颜色调用次方法
      */
     override fun setSingleColor(color: Int) {
-        mView.post {
-            mPaint.shader = null
-            mPaint.color = color
-            mView.invalidate()
-        }
+        mPaint.shader = null
+        mPaint.color = color
+        mView.postInvalidate()
     }
 
     override fun drawCanvas(canvas: Canvas) {

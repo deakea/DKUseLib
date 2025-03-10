@@ -1,7 +1,13 @@
-package com.deak.uselibexample
+package com.deak.uselibexample.utilsdemo
 
+import android.R
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.FragmentActivity
 import com.deak.dkutilslibrary.utils.NetworkManagerUtils
 import com.deak.uselibexample.databinding.ActivityConnectUtilsBinding
@@ -17,8 +23,17 @@ class ConnectedUtilsActivity :FragmentActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val winContent = findViewById<View>(R.id.content) as ViewGroup
+        if (winContent.childCount > 0) {
+            val rootView = winContent.getChildAt(0) as ViewGroup
+            if (rootView != null) {
+                rootView.fitsSystemWindows = true
+            }
+        }
         binding = ActivityConnectUtilsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enableEdgeToEdge(SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
+            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT))
         NetworkManagerUtils.setOnNetworkStatusChange(this)
         initView()
     }

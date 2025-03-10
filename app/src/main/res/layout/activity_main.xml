@@ -30,7 +30,7 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
     </com.deak.dkuilibrary.layout.RoundLinearLayout>
-    <com.deak.dkuilibrary.layout.DKTextView
+    <com.deak.dkuilibrary.view.DKTextView
         android:id="@+id/tv_dk_custom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:dk_textShadowY="1dp"
         app:dk_textShadowRadius="4dp"
         />
-    <com.deak.dkuilibrary.layout.DKTextView
+    <com.deak.dkuilibrary.view.DKTextView
         android:id="@+id/tvDKNetwork"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

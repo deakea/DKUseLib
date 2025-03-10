@@ -1,4 +1,4 @@
-package com.deak.dkuilibrary.layout
+package com.deak.dkuilibrary.view
 
 import android.content.Context
 import android.graphics.Canvas

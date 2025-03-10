@@ -8,6 +8,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.deak.dkuilibrary.layout.RoundLinearLayout
 import com.deak.uselibexample.databinding.ActivityMainBinding
+import com.deak.uselibexample.uidemo.DemoTextViewActivity
+import com.deak.uselibexample.uidemo.RoundLayoutActivity
+import com.deak.uselibexample.utilsdemo.ConnectedUtilsActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,13 +24,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         findViewById<RoundLinearLayout>(R.id.ll_round_layout).setOnClickListener {
-            startActivity(Intent(this,RoundLayoutActivity::class.java))
+            startActivity(Intent(this, RoundLayoutActivity::class.java))
         }
         binding.tvDkCustom.setOnClickListener {
-            startActivity(Intent(this,DemoTextViewActivity::class.java))
+            startActivity(Intent(this, DemoTextViewActivity::class.java))
         }
         binding.tvDKNetwork.setOnClickListener {
-            startActivity(Intent(this,ConnectedUtilsActivity::class.java))
+            startActivity(Intent(this, ConnectedUtilsActivity::class.java))
         }
     }
 }

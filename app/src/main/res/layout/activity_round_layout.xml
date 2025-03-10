@@ -90,4 +90,9 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
     </com.deak.dkuilibrary.layout.RoundLinearLayout>
+    <com.deak.dkuilibrary.layout.TagLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tagLayout"/>
 </LinearLayout>

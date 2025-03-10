@@ -23,11 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.deak.uselibexample.RoundLayoutActivity"
+        <activity android:name="com.deak.uselibexample.uidemo.RoundLayoutActivity"
             android:exported="true"/>
-        <activity android:name="com.deak.uselibexample.DemoTextViewActivity"
+        <activity android:name="com.deak.uselibexample.uidemo.DemoTextViewActivity"
             android:exported="true"/>
-        <activity android:name="com.deak.uselibexample.ConnectedUtilsActivity"
+        <activity android:name="com.deak.uselibexample.utilsdemo.ConnectedUtilsActivity"
             android:exported="true"/>
     </application>
 
