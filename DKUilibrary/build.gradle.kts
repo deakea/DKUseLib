@@ -1,22 +1,26 @@
+import org.gradle.internal.impldep.org.eclipse.jgit.lib.InflaterCache.release
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.mavenPublish)
 }
 afterEvaluate {
-     publishing {
-       publications {
-         // Creates a Maven publication called "release".
-         create<MavenPublication>("release") {
-           // Applies the component for the release build variant.\
-           // from(components["release"])
-           // You can then customize attributes of the publication as shown below.
-           groupId = "com.deak"
-           artifactId = "dk_use_utils"
-           version = "1.0.0"
-          }
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            create<MavenPublication>("release") {
+                // Applies the component for the release build variant.\
+                // from(components["release"])
+                // You can then customize attributes of the publication as shown below.
+                groupId = "com.deak"
+                artifactId = "dk_use_utils"
+                version = "1.0.0"
+
+            }
+
         }
-      }
+    }
 }
 android {
     namespace = "com.deak.dkuilibrary"
