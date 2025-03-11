@@ -1,8 +1,23 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.mavenPublish)
 }
-
+afterEvaluate {
+     publishing {
+       publications {
+         // Creates a Maven publication called "release".
+         create<MavenPublication>("release") {
+           // Applies the component for the release build variant.\
+           // from(components["release"])
+           // You can then customize attributes of the publication as shown below.
+           groupId = (group.toString())
+           artifactId = "wanandroidsdk-kts"
+           version = version
+          }
+        }
+      }
+}
 android {
     namespace = "com.deak.dkuilibrary"
     compileSdk = 35
