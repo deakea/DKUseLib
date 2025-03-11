@@ -11,9 +11,9 @@ afterEvaluate {
            // Applies the component for the release build variant.\
            // from(components["release"])
            // You can then customize attributes of the publication as shown below.
-           groupId = (group.toString())
-           artifactId = "wanandroidsdk-kts"
-           version = version
+           groupId = "com.deak"
+           artifactId = "dk_use_utils"
+           version = "1.0.0"
           }
         }
       }
