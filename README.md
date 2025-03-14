@@ -1,5 +1,5 @@
 # DKUseLib
-
+[![](https://jitpack.io/v/deakea/DKUseLib.svg)](https://jitpack.io/#deakea/DKUseLib)
 #### 介绍
 自定义UI集合，包括各种布局、textView、自定义背景、圆角、字体阴影、边框、渐变等
 
